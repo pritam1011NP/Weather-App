@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.5s ease; /* Smooth transition for background image */
+      margin: 0;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      color: #6a11cb;
+    }
+
+    #weatherForm {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    #locationInput {
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #bb1a1a;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 1em;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #ff6f61;
+      color: #fff;
+      border: 2px solid #1abb9396;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff3b2f;
+    }
+
+    .weather-result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    .weather-result h2 {
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+
+    .weather-result img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+
+    .weather-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .weather-details p {
+      margin: 5px 0;
+      font-size: 1em;
+    }
+
+    .wind-direction {
+      display: inline-block;
+      font-size: 1.5em;
+      transform: rotate(0deg);
+      transition: transform 0.5s ease;
+    }
+
+    .air-quality {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+    }
+
+    .air-quality-bar {
+      height: 10px;
+      background: linear-gradient(90deg, #00e400, #ffff00, #ff7e00, #ff0000, #8f3f97);
+      border-radius: 5px;
+      margin-top: 10px;
+      position: relative;
+    }
+
+    .air-quality-bar::after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 2px;
+      background: #fff;
+      top: 0;
+      left: 0;
+    }
+
+    /* Weather-specific backgrounds */
+    .sunny {
+      background-image: url('D:/Weather/images/sunny.jpg');
+    }
+
+    .clear {
+      background-image: url('D:/Weather/images/clear.jpg');
+    }
+
+    .rainy {
+      background-image: url('D:/Weather/images/rainy.jpg');
+    }
+
+    .cloudy {
+      background-image: url('D:/Weather/images/cloudy.jpg');
+    }
+
+    .snowy {
+      background-image: url('D:/Weather/images/snowy.jpg');
+    }
+
+    .stormy {
+      background-image: url('D:/Weather/images/stormy.jpg');
+    }
+
+    .foggy {
+      background-image: url('D:/Weather/images/foggy.jpg');
+    }
+    .mist {
+      background-image: url('D:/Weather/images/mist.jpg');
+    }
+
+    .overcast {
+      background-image: url('D:/Weather/images/overcast.jpg');
+    }
+
+
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Weather App</h1>
+    <form id="weatherForm">
+      <input type="text" id="locationInput" placeholder="Enter a city or location" required>
+      <button type="submit">Get Weather</button>
+    </form>
+    <div id="weatherResult" class="weather-result">
+      <!-- Weather data will be displayed here -->
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('weatherForm').addEventListener('submit', function (e) {
+      e.preventDefault(); // Prevent form submission
+      const location = document.getElementById('locationInput').value;
+
+      if (location) {
+        fetchWeather(location);
+      } else {
+        alert('Please enter a location.');
+      }
+    });
+
+    function fetchWeather(location) {
+      const apiKey = 'ffc85f57af49448b81e92630252801'; // Your API key
+      const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
+
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error) {
+            alert(data.error.message);
+          } else {
+            displayWeather(data);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching weather data:', error);
+          alert('Failed to fetch weather data. Please try again.');
+        });
+    }
+
+    function displayWeather(data) {
+      const weatherResult = document.getElementById('weatherResult');
+      const locationName = data.location.name;
+      const temperature = data.current.temp_c;
+      const condition = data.current.condition.text.toLowerCase();
+      const iconCode = data.current.condition.icon.split('/').pop(); // Extract icon code (e.g., "113.png")
+      const windKph = data.current.wind_kph;
+      const windDegree = data.current.wind_degree;
+      const windDir = data.current.wind_dir;
+      const pressureMb = data.current.pressure_mb;
+      const humidity = data.current.humidity;
+      const cloud = data.current.cloud;
+      const feelslikeC = data.current.feelslike_c;
+      const feelslikeF = data.current.feelslike_f;
+      const heatindexC = data.current.heatindex_c;
+      const heatindexF = data.current.heatindex_f;
+      const dewpointC = data.current.dewpoint_c;
+      const dewpointF = data.current.dewpoint_f;
+      const visKm = data.current.vis_km;
+      const uv = data.current.uv;
+      const airQuality = data.current.air_quality;
+
+      // Set background based on weather condition
+      const body = document.body;
+      body.className = ''; // Reset background class
+      if (condition.includes('sunny')) {
+        body.classList.add('sunny');
+      } else if (condition.includes('clear')) {
+        body.classList.add('clear');
+      } else if (condition.includes('rain')) {
+        body.classList.add('rainy');
+      } else if (condition.includes('cloud')) {
+        body.classList.add('cloudy');
+      } else if (condition.includes('snow')) {
+        body.classList.add('snowy');
+      } else if (condition.includes('storm')) {
+        body.classList.add('stormy');
+      } else if (condition.includes('fog')) {
+        body.classList.add('foggy');
+      }
+        else if (condition.includes('mist')) {
+        body.classList.add('mist');
+      }
+
+      else if (condition.includes('overcast')) {
+        body.classList.add('overcast');
+      }
+
+      // Wind direction arrow rotation
+      const windDirectionArrow = `<span class="wind-direction" style="transform: rotate(${windDegree}deg);">⬇️</span>`;
+
+      // Air quality bar position (0-100%)
+      const airQualityValue = airQuality?.pm2_5 || 0;
+      const airQualityBarPosition = Math.min((airQualityValue / 300) * 100, 100); // Normalize to 0-100%
+
+      // Update weather result content
+      weatherResult.innerHTML = `
+        <h2>${locationName}</h2>
+        <p>Temperature: ${temperature}°C</p>
+        <p>Condition: ${condition}</p>
+        <div class="weather-details">
+          <p>Wind Speed: ${windKph} kph</p>
+          <p>Wind Direction: ${windDir} ${windDirectionArrow}</p>
+          <p>Pressure: ${pressureMb} mb</p>
+          <p>Humidity: ${humidity}%</p>
+          <p>Cloud Cover: ${cloud}%</p>
+          <p>Feels Like: ${feelslikeC}°C / ${feelslikeF}°F</p>
+          <p>Heat Index: ${heatindexC}°C / ${heatindexF}°F</p>
+          <p>Dew Point: ${dewpointC}°C / ${dewpointF}°F</p>
+          <p>Visibility: ${visKm} km</p>
+          <p>UV Index: ${uv}</p>
+        </div>
+        <div class="air-quality">
+          <p>Air Quality (PM2.5): ${airQualityValue} µg/m³</p>
+          <div class="air-quality-bar" style="width: ${airQualityBarPosition}%;"></div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -46,10 +46,10 @@ const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${loca
 ```
 
 ### 3. Run the app  
-Open the `index.html` file in your browser, or use **VS Code Live Server**:  
+Open the `Abahaoya.html` file in your browser, or use **VS Code Live Server**:  
 ```bash
 # If using VS Code
-Right click index.html -> "Open with Live Server"
+Right click Abahaoya.html -> "Open with Live Server"
 ```
 
 ---
@@ -76,5 +76,6 @@ This project is open-source under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author  
 **Pritam Majumder**  
-📧 [Your Email]  
-🔗 [LinkedIn](https://linkedin.com/in/your-profile) | [GitHub](https://github.com/your-username)  
+📧 [pritammajumder792@gmail.com ]  
+🔗 [LinkedIn](https://www.linkedin.com/in/pritamnp/) 
+    [GitHub](https://github.com/pritam1011NP)  

@@ -16,8 +16,8 @@ It fetches real-time weather data using the [OpenWeather API](https://openweathe
 ---
 
 ## 🖼️ Preview  
-![Image Alt](https://github.com/pritam1011NP/Weather-App/blob/9d12fe552aba5bb20b8668ce10b79b9ae7287b9d/Screenshot 2025-08-29 155346.png)  
-*(Add a screenshot of your app here once you capture one)*  
+![Image Alt](https://github.com/pritam1011NP/Weather-App/blob/main/Screenshot%202025-08-29%20155346.png)  
+*(A sample screenshot of my Weather-App)*  
 
 ---
 

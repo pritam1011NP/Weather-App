@@ -41,7 +41,8 @@ cd weather-app
 Open `script.js` and replace `YOUR_API_KEY` with your API key from [OpenWeather](https://home.openweathermap.org/users/sign_up).
 
 ```javascript
-const apiKey = "YOUR_API_KEY";
+const apiKey = "ffc85f57af49448b81e92630252801";
+const apiUrl = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=yes`;
 ```
 
 ### 3. Run the app  

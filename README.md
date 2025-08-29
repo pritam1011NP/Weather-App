@@ -16,7 +16,7 @@ It fetches real-time weather data using the [OpenWeather API](https://openweathe
 ---
 
 ## 🖼️ Preview  
-![Weather App Screenshot](screenshot.png)  
+![Weather App Screenshot](Screenshot 2025-08-29 155346.png)  
 *(Add a screenshot of your app here once you capture one)*  
 
 ---
